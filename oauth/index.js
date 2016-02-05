@@ -8,10 +8,24 @@ app.use(bodyParser.urlencoded({extended: true}));
 
 app.use(bodyParser.json());
 
-var memorystore = require('./model.js');
+var mongoose = require('mongoose');
+
+var uristring = 'mongodb://secure-chat:Bq9a4LzSRc4p04g@ds055915.mongolab.com:55915/secure-chat';
+
+// Makes connection asynchronously. Mongoose will queue up database
+// operations and release them when the connection is complete.
+mongoose.connect(uristring, function (err, res) {
+    if (err) {
+        console.log ('ERROR connecting to: ' + uristring + '. ' + err);
+    } else {
+        console.log ('Succeeded connected to: ' + uristring);
+    }
+});
+
+var mongoStore = require('./mongo-model');
 
 app.oauth = oauthserver({
-    model: memorystore,
+    model: mongoStore,
     grants: ['password','refresh_token'],
     debug: true
 });
