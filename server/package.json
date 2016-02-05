@@ -1,23 +1,29 @@
 {
   "name": "cryptochat-server",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "version": "0.0.1",
+  "description": "Websocket server",
+  "private": true,
+  "main": "bin/server.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "style": "semistandard"
+    "start": "nodemon ./bin/server.js"
   },
-  "keywords": [],
-  "author": "Sebastian Schenk && Johannes Ferner",
-  "license": "MIT",
+  "author": "",
+  "license": "ISC",
   "dependencies": {
-    "express": "^4.13.4",
-    "http": "0.0.0",
-    "socket.io": "^1.4.5"
+    "body-parser": "^1.14.1",
+    "cookie-parser": "^1.4.0",
+    "debug": "^2.2.0",
+    "express": "^4.13.3",
+    "morgan": "^1.6.1",
+    "node-uuid": "^1.4.7",
+    "q": "^1.4.1",
+    "redis": "^2.4.2",
+    "socket.io": "^1.3.7",
+    "socket.io-redis": "^1.0.0"
   },
-  "semistandard": {
-    "ignore": [
-      "node_modules"
-    ]
+  "devDependencies": {
+    "chai": "~3.4.1",
+    "mocha": "~2.3.4",
+    "mocha-bamboo-reporter": "~1.1.0"
   }
 }
