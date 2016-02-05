@@ -1,3 +1,5 @@
+/.ide
+*.iml
 # Logs
 logs
 *.log
