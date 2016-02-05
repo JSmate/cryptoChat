@@ -8,5 +8,10 @@
   },
   "keywords": [],
   "author": "Sebastian Schenk && Johannes Ferner",
-  "license": "MIT"
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.13.4",
+    "http": "0.0.0",
+    "socket.io": "^1.4.5"
+  }
 }
