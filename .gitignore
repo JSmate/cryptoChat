@@ -1,4 +1,5 @@
-/.idea
+/.ide
+*.iml
 # Logs
 logs
 *.log
