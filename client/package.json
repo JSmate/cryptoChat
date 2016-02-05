@@ -8,5 +8,10 @@
   },
   "keywords": [],
   "author": "Sebastian Schenk && Johannes Ferner",
-  "license": "MIT"
+  "license": "MIT",
+  "standard": {
+    "ignore": [
+      "node_modules"
+    ]
+  }
 }

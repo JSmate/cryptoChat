@@ -54,14 +54,25 @@ $(function() {
     // Sends a chat message
     function sendMessage () {
         var message = $inputMessage.val();
+
         // Prevent markup from being injected into the message
         message = cleanInput(message);
+
+        var encrypt = new JSEncrypt();
+        encrypt.setPublicKey($('#pubkey').val());
+        message = encrypt.encrypt(message);
+
+
         // if there is a non-empty message and a socket connection
         if (message && connected) {
             $inputMessage.val('');
+
+            var decrypt = new JSEncrypt();
+            decrypt.setPrivateKey($('#privkey').val());
+
             addChatMessage({
                 username: username,
-                message: message
+                message: decrypt.decrypt(message)
             });
             // tell server to execute 'new message' and send along one parameter
             socket.emit('new message', message);
@@ -238,6 +249,11 @@ $(function() {
 
     // Whenever the server emits 'new message', update the chat body
     socket.on('new message', function (data) {
+        var decrypt = new JSEncrypt();
+        decrypt.setPrivateKey($('#privkey').val());
+        console.log('encrypted message:', data.message);
+        data.message = decrypt.decrypt(data.message);
+        console.log('decrypted message:', data.message);
         addChatMessage(data);
     });
 

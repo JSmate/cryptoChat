@@ -4,7 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "style": "semistandard"
   },
   "keywords": [],
   "author": "Sebastian Schenk && Johannes Ferner",
@@ -13,5 +14,10 @@
     "express": "^4.13.4",
     "http": "0.0.0",
     "socket.io": "^1.4.5"
+  },
+  "semistandard": {
+    "ignore": [
+      "node_modules"
+    ]
   }
 }
