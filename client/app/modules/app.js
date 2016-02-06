@@ -19,7 +19,8 @@ import uiBootstrap from 'angular-ui-bootstrap';
 //modules
 import main from './main';
 import home from './home';
-
+import chat from './chat';
+import login from './login';
 
 //Start by defining the main module and adding the module dependencies
 angular.module('app', [
@@ -29,7 +30,9 @@ angular.module('app', [
     uiBootstrap,
 
     main,
-    home
+    home,
+    chat,
+    login
 ]).config(config);
 
 //Then define the init function for starting up the application

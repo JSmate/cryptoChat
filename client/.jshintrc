@@ -6,6 +6,7 @@
     "eqeqeq": true,
     "esnext": true,
     "globals": {
+        "io": false,
         "window": false,
         "afterEach": false,
         "alert": false,
