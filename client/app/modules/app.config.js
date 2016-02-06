@@ -2,5 +2,5 @@
 
 export default function routing($urlRouterProvider, $locationProvider) {
     $locationProvider.hashPrefix('!');
-    $urlRouterProvider.otherwise('/home');
+    $urlRouterProvider.otherwise('/login');
 }
