@@ -38,6 +38,6 @@ app.get('/', app.oauth.authorise(), function (req, res) {
 
 app.use(app.oauth.errorHandler());
 
-app.listen(3001);
+app.listen(3002);
 
-console.info('running at port 3001');
+console.info('running at port 3002');

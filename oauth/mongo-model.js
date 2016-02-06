@@ -2,7 +2,6 @@ var mongoose = require('mongoose'),
     Schema = mongoose.Schema,
     model = module.exports;
 
-//
 // Schemas definitions
 //
 var OAuthAccessTokensSchema = new Schema({
@@ -57,12 +56,17 @@ model.getClient = function (clientId, clientSecret, callback) {
     if (clientSecret === null) {
         return OAuthClientsModel.findOne({ clientId: clientId }, callback);
     }
+    OAuthClientsModel.findOne({ clientId: clientId, clientSecret: clientSecret }, function(error, data){
+        console.info('error,data', error, data);
+
+    });
+
     OAuthClientsModel.findOne({ clientId: clientId, clientSecret: clientSecret }, callback);
 };
 
 // This will very much depend on your setup, I wouldn't advise doing anything exactly like this but
 // it gives an example of how to use the method to resrict certain grant types
-var authorizedClientIds = ['s6BhdRkqt3', 'toto'];
+var authorizedClientIds = ['test'];
 model.grantTypeAllowed = function (clientId, grantType, callback) {
     console.log('in grantTypeAllowed (clientId: ' + clientId + ', grantType: ' + grantType + ')');
 
