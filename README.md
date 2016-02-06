@@ -6,10 +6,17 @@ nodejs and angular2 fully end2end encrypted chat application
 
 ## get it up and running: 
 
-```
-    cd ./client
-    npm install
-    cd ../server
-    npm install
-    node index.js
-```
+### install redis on mac
+* install homebrew (http://brew.sh/)
+* brew install redis
+
+### start backend
+* (cli) redis-server
+* go to ./server 
+* npm install
+* npm start
+
+### start frontend
+* go to ./client
+* npm install
+* npm start

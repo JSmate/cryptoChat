@@ -3,7 +3,6 @@
 var redisClient = require('../helpers/Redis.helper');
 var config = require('../../../config/config');
 var wsEvents = require('../config/ws-events');
-var uuid = require('node-uuid');
 
 class UserSocketController {
     constructor(nsp, socket) {
@@ -60,6 +59,7 @@ class UserSocketController {
     }
 
     disconnect() {
+        console.log('user disconnected');
         if (this.addedUser) {
             redisClient.decr('users', (err, reply) => {
                 this.numUsers = reply;

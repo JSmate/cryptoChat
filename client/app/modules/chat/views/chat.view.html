@@ -1,1 +1,12 @@
-<p>wow</p>
+<div class="pages">
+    <div class="chat page">
+        <div class="chatArea">
+            <!--<ul class="messages"></ul>-->
+            <messages></messages>
+        </div>
+        <input class="inputMessage"
+               placeholder="Type here..."
+               ng-model="vm.message"
+               ng-keydown="vm.sendMessage($event)"/>
+    </div>
+</div>

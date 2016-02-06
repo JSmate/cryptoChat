@@ -15,6 +15,7 @@ import ngResource from 'angular-resource';
 import uiRouter from 'angular-ui-router';
 import ngSanitize from 'angular-sanitize';
 import uiBootstrap from 'angular-ui-bootstrap';
+import socketIo from '../libs/socketIo';
 
 //modules
 import main from './main';
@@ -28,6 +29,7 @@ angular.module('app', [
     uiRouter,
     ngSanitize,
     uiBootstrap,
+    socketIo,
 
     main,
     home,

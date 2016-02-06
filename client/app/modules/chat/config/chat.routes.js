@@ -12,6 +12,9 @@ export function routes($stateProvider) {
                     controller: 'ChatController',
                     controllerAs: 'vm'
                 }
+            },
+            data: {
+                requireLogin: true
             }
         });
 }

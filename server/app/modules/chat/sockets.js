@@ -3,13 +3,14 @@ var io = require('./helpers/SocketIO.helper').instance();
 
 var UserSocketController = require('./controllers/UserSocketController');
 var wsEvents = require('./config/ws-events');
+var redisClient = require('./helpers/Redis.helper');
 
 var nsp = io.of('/chat');
 
-var numUsers = 0;
+redisClient.set('users', 0);
 
 nsp.on(wsEvents.CONNECTION, socket => {
-    var socketHandler = new UserSocketController(nsp, socket, numUsers);
+    var socketHandler = new UserSocketController(nsp, socket);
 
     listenToEvents(socketHandler);
 });
