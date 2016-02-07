@@ -27,7 +27,9 @@ export function ChatController(UserSocket, Chat, User, $scope) {
         vm.messages[message.sender.id] = vm.messages[message.sender.id] || [];
         vm.messages[message.sender.id].push(message);
 
-        vm.newMessages.push(message.sender.id);
+        if(vm.newMessages.indexOf(message.sender.id) === -1) {
+            vm.newMessages.push(message.sender.id);
+        }
     });
 
     // Whenever the server emits 'user joined', log it in the chat body
@@ -57,7 +59,7 @@ export function ChatController(UserSocket, Chat, User, $scope) {
     function selectUser(user) {
         vm.selectedUser = user;
         for(var i = 0, n = vm.newMessages.length; i < n ; i++) {
-            if(vm.newMessages[i] === vm.selectUser.id) {
+            if(vm.newMessages[i] === vm.selectedUser.id) {
                 vm.newMessages.splice(i, 1);
                 break;
             }
@@ -65,7 +67,8 @@ export function ChatController(UserSocket, Chat, User, $scope) {
     }
 
     function hasNewMessage (user) {
-        return vm.newMessages.indexOf(user.id) !== -1 && (!vm.selectedUser || vm.selectedUser && vm.selectedUser.id !== user.id);
+        return vm.newMessages.indexOf(user.id) !== -1 &&
+            (!vm.selectedUser || vm.selectedUser && vm.selectedUser.id !== user.id);
     }
 
     // Sends a chat message
