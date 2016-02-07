@@ -7,7 +7,7 @@ export class UserSocketService {
     }
 
     create() {
-        var ioSocket = io.connect('http://localhost:3000/chat');
+        var ioSocket = io.connect('/chat');
 
         var socket = this.socketFactory({
             ioSocket: ioSocket

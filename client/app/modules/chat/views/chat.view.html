@@ -3,9 +3,9 @@
         <div class="col-sm-3">
             <div class="well">
                 <span ng-if="!vm.onlineUsers.length" class="text-muted">No users online</span>
-                <input ng-if="vm.onlineUsers.length" type="text" ng-model="vm.search" placeholder="search user"/>
+                <input ng-if="vm.onlineUsers.length" class="people-search" type="text" ng-model="vm.search" placeholder="search user"/>
                 <ul class="list-group" ng-if="vm.onlineUsers.length">
-                    <li ng-repeat="user in filterUsers  = (vm.onlineUsers | fuzzyBy: 'username': vm.search)">
+                    <li class="people-list-item" ng-repeat="user in filterUsers  = (vm.onlineUsers | fuzzyBy: 'username': vm.search)">
                         <a href="" class="list-group-item" ng-click="vm.selectUser(user)">
                             <img src="http://lorempixel.com/32/32/people/" alt="avatar"
                                  class="img-circle"/>
@@ -44,7 +44,8 @@
                         name="message-to-send" id="message-to-send" placeholder="Type your message"
                         rows="3"
                         ng-model="vm.messageBody"
-                        focus-me="true"></textarea>
+                        focus-me="true"
+                        ng-keypress="vm.pressedEnter($event)"></textarea>
 
                     <!--<i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;-->
                     <!--<i class="fa fa-file-image-o"></i>-->

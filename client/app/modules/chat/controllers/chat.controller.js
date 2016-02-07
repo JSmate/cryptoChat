@@ -51,6 +51,7 @@ export function ChatController(UserSocket, Chat, User, $scope) {
     vm.sendMessage = sendMessage;
     vm.selectUser = selectUser;
     vm.hasNewMessage = hasNewMessage;
+    vm.pressedEnter = pressedEnter;
 
     function updateTyping() {
         console.log('test');
@@ -69,6 +70,12 @@ export function ChatController(UserSocket, Chat, User, $scope) {
     function hasNewMessage (user) {
         return vm.newMessages.indexOf(user.id) !== -1 &&
             (!vm.selectedUser || vm.selectedUser && vm.selectedUser.id !== user.id);
+    }
+
+    function pressedEnter (e) {
+        if(e.which === 13) {
+            sendMessage();
+        }
     }
 
     // Sends a chat message

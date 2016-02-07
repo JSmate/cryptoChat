@@ -5,13 +5,13 @@ $blue: #94C2ED;
 $orange: #E38968;
 $gray: #92959E;
 
-.people-list {
-  background: lighten($gray, 10%);
-  float: left;
+.people-search {
+  width: 100%;
+  margin-bottom: 20px;
+}
 
-  img {
-    float: left;
-  }
+.people-list-item {
+  margin-bottom: 10px;
 }
 
 .chat {
