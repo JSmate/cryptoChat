@@ -3,6 +3,7 @@
 var redisClient = require('../helpers/Redis.helper');
 var config = require('../../../config/config');
 var wsEvents = require('../config/ws-events');
+var uuid = require('uuid');
 
 class UserSocketController {
     constructor(nsp, socket) {
@@ -26,22 +27,29 @@ class UserSocketController {
         });
     }
 
-    addUser(username) {
+    addUser(user) {
         if (this.addedUser) return;
 
         // we store the username in the socket session for this client
-        this.socket.username = username;
+        this.socket.username = user.username;
 
-        redisClient.incr('users', (err, reply) => {
-            this.numUsers = reply;
-            this.addedUser = true;
-            this.socket.emit(wsEvents.LOGIN, {
-                numUsers: this.numUsers
-            });
-            // echo globally (all clients) that a person has connected
-            this.socket.broadcast.emit(wsEvents.USER_JOINED, {
-                username: this.socket.username,
-                numUsers: this.numUsers
+        user.id = uuid.v1();
+        user.socketId = this.socket.id;
+
+        redisClient.hmset('user:' + user.id, user, (err, res) => {
+            redisClient.sadd('users', 'user:' + user.id, (err, reply) => {
+                redisClient.incr('userCount', (err, reply) => {
+                    this.numUsers = reply;
+                    this.addedUser = true;
+                    this.socket.emit(wsEvents.LOGIN, {
+                        numUsers: this.numUsers
+                    });
+                    // echo globally (all clients) that a person has connected
+                    this.socket.broadcast.emit(wsEvents.USER_JOINED, {
+                        user: user,
+                        numUsers: this.numUsers
+                    });
+                });
             });
         });
     }

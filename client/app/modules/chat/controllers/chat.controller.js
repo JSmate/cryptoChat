@@ -6,6 +6,7 @@ export function ChatController(UserSocket, Chat, User) {
     var socket = UserSocket.getSocket();
 
     vm.message = '';
+    vm.users = [];
 
     // Whenever the server emits 'login', log the login message
     socket.on('login', function (data) {
@@ -24,7 +25,8 @@ export function ChatController(UserSocket, Chat, User) {
 
     // Whenever the server emits 'user joined', log it in the chat body
     socket.on('user joined', function (data) {
-        Chat.log(data.username + ' joined');
+
+        Chat.log(data.user.username + ' joined');
         Chat.addParticipantsMessage(data);
     });
 

@@ -7,16 +7,25 @@ export function LoginController(UserSocket, $state, User) {
 
     vm.username = null;
 
-    vm.setUsername = setUsername;
+    vm.setUser = setUser;
 
     // Sets the client's username
-    function setUsername (e) {
+    function setUser (e) {
         // If the username is valid
         if (e.which === 13 && vm.username) {
-            // Tell the server your username
-            socket.emit('add user', vm.username);
+            var crypt = new JSEncrypt();
 
-            User.setUser({username: vm.username});
+            var user = {
+                username: vm.username,
+                publicKey: crypt.getPublicKey()
+            };
+
+            // Tell the server your username
+            socket.emit('add user', user);
+
+            user.privateKey = crypt.getPrivateKey();
+
+            User.setUser(user);
 
             $state.go('main.chat');
         }

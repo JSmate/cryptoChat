@@ -5,7 +5,7 @@ import angular from 'angular';
 import config from './app.config.js';
 
 //libs
-
+import '../libs/JSEncrypt';
 
 //styles
 import './main/assets/sass/styles.scss';

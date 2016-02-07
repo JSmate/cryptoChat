@@ -6,6 +6,7 @@
     "eqeqeq": true,
     "esnext": true,
     "globals": {
+        "JSEncrypt": false,
         "io": false,
         "window": false,
         "afterEach": false,

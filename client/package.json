@@ -50,6 +50,7 @@
     "angular-ui-router": "^0.2.15",
     "bootstrap-sass": "^3.3.6",
     "font-awesome": "^4.5.0",
-    "jquery": "^2.2.0"
+    "jquery": "^2.2.0",
+    "JSEncrypt": "https://github.com/travist/jsencrypt"
   }
 }
