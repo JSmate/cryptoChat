@@ -1,19 +1,21 @@
 <div class="row">
     <div class="chatArea col-md-12">
-        <div class="col-sm-3 well">
-            <span ng-if="!vm.onlineUsers.length" class="text-muted">No users online</span>
-            <input ng-if="vm.onlineUsers.length" type="text" ng-model="vm.search" placeholder="search user"/>
-            <ul class="list-group" ng-if="vm.onlineUsers.length">
-                <li ng-repeat="user in filterUsers  = (vm.onlineUsers | fuzzyBy: 'username': vm.search)">
-                    <a href="" class="list-group-item" ng-click="vm.selectUser(user)">
-                        <img src="http://lorempixel.com/32/32/people/" alt="avatar"
-                             class="img-circle"/>
-                        <strong ng-if="vm.hasNewMessage(user)">{{user.username}}</strong>
-                        <span ng-if="!vm.hasNewMessage(user)">{{user.username}}</span>
-                    </a>
-                </li>
-                <li ng-if="filterUsers.length === 0 && vm.search !==''">No results</li>
-            </ul>
+        <div class="col-sm-3">
+            <div class="well">
+                <span ng-if="!vm.onlineUsers.length" class="text-muted">No users online</span>
+                <input ng-if="vm.onlineUsers.length" type="text" ng-model="vm.search" placeholder="search user"/>
+                <ul class="list-group" ng-if="vm.onlineUsers.length">
+                    <li ng-repeat="user in filterUsers  = (vm.onlineUsers | fuzzyBy: 'username': vm.search)">
+                        <a href="" class="list-group-item" ng-click="vm.selectUser(user)">
+                            <img src="http://lorempixel.com/32/32/people/" alt="avatar"
+                                 class="img-circle"/>
+                            <strong ng-if="vm.hasNewMessage(user)">{{user.username}}</strong>
+                            <span ng-if="!vm.hasNewMessage(user)">{{user.username}}</span>
+                        </a>
+                    </li>
+                    <li ng-if="filterUsers.length === 0 && vm.search !==''">No results</li>
+                </ul>
+            </div>
         </div>
 
         <div class="col-sm-9">
