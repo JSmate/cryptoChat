@@ -18,5 +18,20 @@ ul, ol{
   list-style-type: none;
 }
 body{
-  background: #BF4E2C;
+  background: rgb(56, 56, 56);
+}
+
+.header-panel{
+  background: black;
+  color: white;
+  padding: 5px;
+  margin-bottom: 30px;
+
+  h1{
+    font-family: Consolas, monaco, monospace;
+    color: #00e62f;
+    font-size: 12px;
+    margin: 0;
+    padding: 0;
+  }
 }

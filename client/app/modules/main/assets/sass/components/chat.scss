@@ -9,57 +9,15 @@ $gray: #92959E;
   background: lighten($gray, 10%);
   float: left;
 
-  .search {
-  }
-
-  input {
-    border-radius: 3px;
-    border: none;
-    padding: 14px;
-    color: white;
-    background: #6A6C75;
-    width: 90%;
-    font-size: 14px;
-  }
-
-  .fa-search {
-    position: relative;
-    left: -25px;
-  }
-
-  ul {
-    padding: 20px;
-    li {
-      padding-bottom: 20px;
-    }
-  }
-
   img {
     float: left;
   }
-
-  .about {
-    float: left;
-    margin-top: 8px;
-  }
-
-  .about {
-    padding-left: 8px;
-  }
-
-  .status {
-    color: $gray;
-  }
-
 }
 
 .chat {
-  float: left;
   background: #F2F5F8;
-  border-top-right-radius: 5px;
-  border-bottom-right-radius: 5px;
-
   color: #434651;
+  width: 100%;
 
   .chat-header {
     padding: 20px;
