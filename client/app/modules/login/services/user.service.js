@@ -9,6 +9,11 @@ export class UserService {
         this.user = user;
     }
 
+    updateUser(user) {
+        angular.extend(this.user, user);
+        return this.user;
+    }
+
     getUser() {
         return this.user;
     }

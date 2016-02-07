@@ -1,11 +1,12 @@
 <ul class="messages">
-    <li class="clearfix" ng-repeat="item in messages">
-        <div class="message-data align-right">
-            <span class="message-data-time" >{{item.time}}</span> &nbsp; &nbsp;
-            <span class="message-data-name" >{{item.user}}</span> <i class="fa fa-circle me"></i>
+    <li class="clearfix" ng-repeat="message in vm.messages">
+        <div class="message-data" ng-class="{'align-right': vm.user.id !== message.sender.id}">
+            <span class="message-data-time" >{{message.timestamp | date:'dd.MM.yyyy'}}</span> &nbsp; &nbsp;
+            <span class="message-data-name" >{{message.sender.username}}</span> <i class="fa fa-circle me"></i>
         </div>
-        <div class="message other-message float-right">
-            {{item.message}}
+        <div class="message"
+             ng-class="{'other-message float-right': vm.user.id !== message.sender.id, 'my-message': vm.user.id === message.sender.id}">
+            {{message.body}}
         </div>
     </li>
 </ul>

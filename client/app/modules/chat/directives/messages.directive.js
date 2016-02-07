@@ -2,23 +2,19 @@
 
 import messagesTemplate from '../views/messages.template.html';
 
-export function messagesDirective(Chat) {
+export function messagesDirective(User) {
     return {
         restrict: 'E',
         templateUrl: messagesTemplate,
-        scope: {},
+        scope: {
+            messages: '='
+        },
         replace: true,
-        link: (scope, elem, attrs) => {
-            scope.messages = [
-                {
-                    user: 'Frank',
-                    message: 'Yo Tom'
-                },
-                {
-                    user: 'Tom',
-                    message: 'Hey Frank'
-                }
-            ];
-        }
+        controller: function() {
+            var vm = this;
+            vm.user = User.getUser();
+        },
+        controllerAs: 'vm',
+        bindToController: true
     };
 }

@@ -51,7 +51,7 @@ class UserSocketController {
         this.user = _.cloneDeep(user);
         this.user.socketId = this.socket.id;
 
-        redisClient.hmset('user:' + this.user.id, user, (err, res) => {
+        redisClient.hmset('user:' + this.user.id, this.user, (err, res) => {
             redisClient.keys('user:*', (err, userKeys) => {
                 var batch = redisClient.batch();
                 userKeys.forEach(x => x !== 'user:' + this.user.id && batch.hgetall(x));

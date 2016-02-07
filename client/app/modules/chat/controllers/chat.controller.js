@@ -5,7 +5,8 @@ export function ChatController(UserSocket, Chat, User) {
 
     var socket = UserSocket.getSocket();
 
-    vm.message = '';
+    vm.messageBody = '';
+    vm.messages = [];
     vm.user = null;
     vm.onlineUsers = [];
     vm.selectedUser = null;
@@ -13,17 +14,18 @@ export function ChatController(UserSocket, Chat, User) {
     // Whenever the server emits 'login', log the login message
     socket.on('login', function (data) {
         // Display the welcome message
-        var message = 'Welcome to Socket.IO Chat – ';
         // TODO add message
-        vm.user = data.user;
+        vm.user = User.updateUser(data.user);
         vm.onlineUsers = data.onlineUsers;
     });
 
     // Whenever the server emits 'new message', update the chat body
     socket.on('new message', function (message) {
         var crypt = new JSEncrypt();
-        crypt.setPrivateKey(User.getUser().privateKey);
+        crypt.setPrivateKey(vm.user.privateKey);
         message.body = crypt.decrypt(message.body);
+
+        vm.messages.push(message);
         // TODO add message
     });
 
@@ -45,32 +47,35 @@ export function ChatController(UserSocket, Chat, User) {
 
     vm.updateTyping = updateTyping;
     vm.sendMessage = sendMessage;
+    vm.selectUser = selectUser;
 
     function updateTyping() {
         console.log('test');
     }
 
+    function selectUser(user) {
+        vm.selectedUser = user;
+    }
+
     // Sends a chat message
     function sendMessage() {
-        var crypt = new JSEncrypt();
-        crypt.setPublicKey(vm.selectedUser.publicKey);
-        var message = {
-            sender: vm.user,
-            receiver: vm.selectedUser,
-            body: angular.copy(vm.message)
-        };
-
         // if there is a non-empty message and a socket connection
-        if (message && socket) {
-            vm.message = '';
+        if (vm.messageBody && socket) {
+            var crypt = new JSEncrypt();
+            crypt.setPublicKey(vm.selectedUser.publicKey);
+            var message = {
+                sender: vm.user,
+                receiver: vm.selectedUser,
+                body: angular.copy(vm.messageBody)
+            };
+
+            vm.messageBody = '';
+            vm.messages.push(angular.copy(message));
+            message.body = crypt.encrypt(message.body);
 
             // TODO add message
             // tell server to execute 'new message' and send along one parameter
-            var messageObj = {
-                user: vm.selectedUser,
-                message: crypt.encrypt(message)
-            };
-            socket.emit('new message', messageObj);
+            socket.emit('new message', message);
         }
     }
 }

@@ -5,7 +5,7 @@
 
             <ul class="list-group" ng-if="vm.onlineUsers.length">
                 <li ng-repeat="user in vm.onlineUsers">
-                    <a href="" class="list-group-item">
+                    <a href="" class="list-group-item" ng-click="vm.selectUser(user)">
                         <img src="http://lorempixel.com/32/32/people/" alt="avatar"
                              class="img-circle"/>
                         {{user.username}}
@@ -30,14 +30,14 @@
                 </div> <!-- end chat-header -->
 
                 <div class="chat-history clearfix">
-                    <messages></messages>
+                    <messages messages="vm.messages"></messages>
                 </div><!-- end chat-history -->
 
                 <div class="chat-message ">
                 <textarea
                         name="message-to-send" id="message-to-send" placeholder="Type your message"
                         rows="3"
-                        ng-model="vm.message"
+                        ng-model="vm.messageBody"
                         focus-me="true"></textarea>
 
                     <!--<i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;-->
