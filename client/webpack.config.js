@@ -32,8 +32,15 @@ module.exports = {
         stats: 'errors-only',
 
         // Parse host and port from env so this is easy to customize.
-        host: process.env.HOST || '127.0.0.1',
-        port: process.env.PORT || '8080'
+        host: process.env.HOST || '0.0.0.0',
+        port: process.env.PORT || '8080',
+
+        proxy: {
+            '/socket.io*': {
+                target: 'http://localhost:3000',
+                secure: false
+            }
+        }
     },
 
     plugins: [

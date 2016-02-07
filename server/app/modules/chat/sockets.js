@@ -7,8 +7,11 @@ var redisClient = require('./helpers/Redis.helper');
 
 var nsp = io.of('/chat');
 
-redisClient.set('userCount', 0);
-redisClient.del('users');
+redisClient.keys('user:*', (err, reply) => {
+    if(reply.length) {
+        redisClient.del(reply);
+    }
+});
 
 nsp.on(wsEvents.CONNECTION, socket => {
     var socketHandler = new UserSocketController(nsp, socket);

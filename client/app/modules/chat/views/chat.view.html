@@ -3,23 +3,17 @@
         <messages></messages>
 
     </div>
-    <div class="key-information col-md-12">
 
-        <label for="privateKey">private Key</label>
-            <textarea id="privateKey">
-
-            </textarea>
-        <label for="publicKey">public Key</label>
-            <textarea id="publicKey">
-
-            </textarea>
-    </div>
-    <div class="chatinput col-md-12">
-        <input class="inputMessage"
+    <div class="chatinput col-md-12 clearfix">
+        <input ng-disabled="!vm.selectedUser" class="inputMessage"
                placeholder="Type here..."
                ng-model="vm.message"
                focus-me="true"
                ng-keydown="vm.sendMessage($event)"/>
+    </div>
+
+    <div class="col-md-12">
+        <select ng-model="vm.selectedUser" ng-options="user.username for user in vm.onlineUsers"></select>
     </div>
 </div>
 

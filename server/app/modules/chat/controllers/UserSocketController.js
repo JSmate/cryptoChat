@@ -21,9 +21,9 @@ class UserSocketController {
 
     newMessage(data) {
         // we tell the client to execute 'new message'
-        this.socket.broadcast.emit(wsEvents.NEW_MESSAGE, {
+        this.socket.to(data.user.socketId).emit(wsEvents.NEW_MESSAGE, {
             username: this.socket.username,
-            message: data
+            message: data.message
         });
     }
 
@@ -36,20 +36,29 @@ class UserSocketController {
         user.id = uuid.v1();
         user.socketId = this.socket.id;
 
+        this.user = user;
+
         redisClient.hmset('user:' + user.id, user, (err, res) => {
-            redisClient.sadd('users', 'user:' + user.id, (err, reply) => {
-                redisClient.incr('userCount', (err, reply) => {
-                    this.numUsers = reply;
-                    this.addedUser = true;
+            redisClient.keys('user:*', (err, userKeys) => {
+                var batch = redisClient.batch();
+
+                userKeys.forEach(x => x !== 'user:' + user.id && batch.hgetall(x));
+
+                this.numUsers = userKeys.length;
+                this.addedUser = true;
+                batch.exec((err, users) => {
                     this.socket.emit(wsEvents.LOGIN, {
-                        numUsers: this.numUsers
-                    });
-                    // echo globally (all clients) that a person has connected
-                    this.socket.broadcast.emit(wsEvents.USER_JOINED, {
-                        user: user,
+                        users: users,
                         numUsers: this.numUsers
                     });
                 });
+            });
+
+
+            // echo globally (all clients) that a person has connected
+            this.socket.broadcast.emit(wsEvents.USER_JOINED, {
+                user: user,
+                numUsers: this.numUsers
             });
         });
     }
@@ -69,13 +78,15 @@ class UserSocketController {
     disconnect() {
         console.log('user disconnected');
         if (this.addedUser) {
-            redisClient.decr('users', (err, reply) => {
-                this.numUsers = reply;
+            redisClient.del('user:' + this.user.id, (err, reply) => {
+                redisClient.keys('user:*', (err, userKeys) => {
+                    this.numUsers = userKeys.length;
 
-                // echo globally that this client has left
-                this.socket.broadcast.emit(wsEvents.USER_LEFT, {
-                    username: this.socket.username,
-                    numUsers: this.numUsers
+                    // echo globally that this client has left
+                    this.socket.broadcast.emit(wsEvents.USER_LEFT, {
+                        username: this.socket.username,
+                        numUsers: this.numUsers
+                    });
                 });
             });
         }
