@@ -42,9 +42,9 @@
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
-    "angular": "^1.4.7",
-    "angular-resource": "^1.4.7",
-    "angular-sanitize": "^1.4.7",
+    "angular": "^1.5.0",
+    "angular-resource": "^1.5.0",
+    "angular-sanitize": "^1.5.0",
     "angular-socket-io": "^0.7.0",
     "angular-ui-bootstrap": "^0.14.3",
     "angular-ui-router": "^0.2.15",
