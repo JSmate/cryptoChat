@@ -6,6 +6,7 @@ export function ChatController(UserSocket, Chat, User) {
     var socket = UserSocket.getSocket();
 
     vm.message = '';
+    vm.user = null;
     vm.onlineUsers = [];
     vm.selectedUser = null;
 
@@ -14,27 +15,32 @@ export function ChatController(UserSocket, Chat, User) {
         // Display the welcome message
         var message = 'Welcome to Socket.IO Chat – ';
         // TODO add message
-        vm.onlineUsers = data.users;
+        vm.user = data.user;
+        vm.onlineUsers = data.onlineUsers;
     });
 
     // Whenever the server emits 'new message', update the chat body
-    socket.on('new message', function (data) {
+    socket.on('new message', function (message) {
         var crypt = new JSEncrypt();
         crypt.setPrivateKey(User.getUser().privateKey);
-        data.message = crypt.decrypt(data.message);
+        message.body = crypt.decrypt(message.body);
         // TODO add message
     });
 
     // Whenever the server emits 'user joined', log it in the chat body
     socket.on('user joined', function (data) {
-        // TODO add message
         vm.onlineUsers.push(data.user);
     });
-
 
     // Whenever the server emits 'user left', log it in the chat body
     socket.on('user left', function (data) {
         // TODO add message
+        for(var i = 0, n = vm.onlineUsers.length; i < n; i++) {
+            if(vm.onlineUsers[i].id === data.user.id) {
+                vm.onlineUsers.splice(i, 1);
+                break;
+            }
+        }
     });
 
     vm.updateTyping = updateTyping;
@@ -45,10 +51,14 @@ export function ChatController(UserSocket, Chat, User) {
     }
 
     // Sends a chat message
-    function sendMessage(e) {
+    function sendMessage() {
         var crypt = new JSEncrypt();
         crypt.setPublicKey(vm.selectedUser.publicKey);
-        var message = angular.copy(vm.message);
+        var message = {
+            sender: vm.user,
+            receiver: vm.selectedUser,
+            body: angular.copy(vm.message)
+        };
 
         // if there is a non-empty message and a socket connection
         if (message && socket) {

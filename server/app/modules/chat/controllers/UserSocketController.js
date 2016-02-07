@@ -49,14 +49,16 @@ class UserSocketController {
         user.id = uuid.v1();
 
         this.user = _.cloneDeep(user);
-        this.user = this.socket.id;
+        this.user.socketId = this.socket.id;
 
         redisClient.hmset('user:' + this.user.id, user, (err, res) => {
             redisClient.keys('user:*', (err, userKeys) => {
                 var batch = redisClient.batch();
-                userKeys.forEach(x => x !== 'user:' + user.id && batch.hgetall(x));
+                userKeys.forEach(x => x !== 'user:' + this.user.id && batch.hgetall(x));
                 batch.exec((err, users) => {
+                    users.forEach(x => delete x.socketId);
                     this.socket.emit(wsEvents.LOGIN, {
+                        user: user,
                         onlineUsers: users
                     });
                 });
