@@ -8,7 +8,8 @@
                     <a href="" class="list-group-item" ng-click="vm.selectUser(user)">
                         <img src="http://lorempixel.com/32/32/people/" alt="avatar"
                              class="img-circle"/>
-                        {{user.username}}
+                        <strong ng-if="vm.hasNewMessage(user)">{{user.username}}</strong>
+                        <span ng-if="!vm.hasNewMessage(user)">{{user.username}}</span>
                     </a>
                 </li>
                 <li ng-if="filterUsers.length === 0 && vm.search !==''">No results</li>
@@ -16,21 +17,24 @@
         </div>
 
         <div class="col-sm-9">
-            <div class="well chat">
+            <div class="well" ng-if="!vm.selectedUser">
+                <h2 class="text-muted">Please select a chat buddy</h2>
+            </div>
+            <div class="well chat" ng-if="vm.selectedUser">
                 <div class="chat-header clearfix">
                     <img src="http://lorempixel.com/64/64/people/"
                          class="img-circle"
                          alt="avatar"/>
 
                     <div class="chat-about">
-                        <div class="chat-with">Chat with Vincent Porter</div>
-                        <div class="chat-num-messages">already 1 902 messages</div>
+                        <div class="chat-with">{{vm.selectedUser.username}}</div>
+                        <div class="chat-num-messages">already {{vm.messages[vm.selectedUser.id].length}} messages</div>
                     </div>
                     <i class="fa fa-star"></i>
                 </div> <!-- end chat-header -->
 
                 <div class="chat-history clearfix">
-                    <messages messages="vm.messages"></messages>
+                    <messages messages="vm.messages[vm.selectedUser.id]"></messages>
                 </div><!-- end chat-history -->
 
                 <div class="chat-message ">

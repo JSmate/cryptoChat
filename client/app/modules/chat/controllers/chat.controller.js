@@ -1,20 +1,19 @@
 'use strict';
 
-export function ChatController(UserSocket, Chat, User) {
+export function ChatController(UserSocket, Chat, User, $scope) {
     var vm = this;
 
     var socket = UserSocket.getSocket();
 
     vm.messageBody = '';
-    vm.messages = [];
+    vm.messages = {};
+    vm.newMessages = [];
     vm.user = null;
     vm.onlineUsers = [];
     vm.selectedUser = null;
 
     // Whenever the server emits 'login', log the login message
     socket.on('login', function (data) {
-        // Display the welcome message
-        // TODO add message
         vm.user = User.updateUser(data.user);
         vm.onlineUsers = data.onlineUsers;
     });
@@ -25,8 +24,10 @@ export function ChatController(UserSocket, Chat, User) {
         crypt.setPrivateKey(vm.user.privateKey);
         message.body = crypt.decrypt(message.body);
 
-        vm.messages.push(message);
-        // TODO add message
+        vm.messages[message.sender.id] = vm.messages[message.sender.id] || [];
+        vm.messages[message.sender.id].push(message);
+
+        vm.newMessages.push(message.sender.id);
     });
 
     // Whenever the server emits 'user joined', log it in the chat body
@@ -36,7 +37,6 @@ export function ChatController(UserSocket, Chat, User) {
 
     // Whenever the server emits 'user left', log it in the chat body
     socket.on('user left', function (data) {
-        // TODO add message
         for(var i = 0, n = vm.onlineUsers.length; i < n; i++) {
             if(vm.onlineUsers[i].id === data.user.id) {
                 vm.onlineUsers.splice(i, 1);
@@ -48,6 +48,7 @@ export function ChatController(UserSocket, Chat, User) {
     vm.updateTyping = updateTyping;
     vm.sendMessage = sendMessage;
     vm.selectUser = selectUser;
+    vm.hasNewMessage = hasNewMessage;
 
     function updateTyping() {
         console.log('test');
@@ -55,6 +56,16 @@ export function ChatController(UserSocket, Chat, User) {
 
     function selectUser(user) {
         vm.selectedUser = user;
+        for(var i = 0, n = vm.newMessages.length; i < n ; i++) {
+            if(vm.newMessages[i] === vm.selectUser.id) {
+                vm.newMessages.splice(i, 1);
+                break;
+            }
+        }
+    }
+
+    function hasNewMessage (user) {
+        return vm.newMessages.indexOf(user.id) !== -1 && (!vm.selectedUser || vm.selectedUser && vm.selectedUser.id !== user.id);
     }
 
     // Sends a chat message
@@ -70,10 +81,10 @@ export function ChatController(UserSocket, Chat, User) {
             };
 
             vm.messageBody = '';
-            vm.messages.push(angular.copy(message));
+            vm.messages[vm.selectedUser.id] = vm.messages[vm.selectedUser.id] || [];
+            vm.messages[vm.selectedUser.id].push(angular.copy(message));
             message.body = crypt.encrypt(message.body);
 
-            // TODO add message
             // tell server to execute 'new message' and send along one parameter
             socket.emit('new message', message);
         }

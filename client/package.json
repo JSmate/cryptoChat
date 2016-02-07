@@ -42,7 +42,9 @@
     "webpack-dev-server": "^1.14.0"
   },
   "dependencies": {
+    "JSEncrypt": "https://github.com/travist/jsencrypt",
     "angular": "^1.5.0",
+    "angular-filter": "^0.5.8",
     "angular-resource": "^1.5.0",
     "angular-sanitize": "^1.5.0",
     "angular-socket-io": "^0.7.0",
@@ -50,7 +52,6 @@
     "angular-ui-router": "^0.2.15",
     "bootstrap-sass": "^3.3.6",
     "font-awesome": "^4.5.0",
-    "jquery": "^2.2.0",
-    "JSEncrypt": "https://github.com/travist/jsencrypt"
+    "jquery": "^2.2.0"
   }
 }
