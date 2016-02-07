@@ -1,19 +1,68 @@
 <div class="row">
     <div class="chatArea col-md-12">
-        <messages></messages>
+        <!--<label for="privateKey">private Key</label>-->
+        <!--<textarea id="privateKey">-->
 
-    </div>
+        <!--</textarea>-->
+        <!--<label for="publicKey">public Key</label>-->
+        <!--<textarea id="publicKey">-->
 
-    <div class="chatinput col-md-12 clearfix">
-        <input ng-disabled="!vm.selectedUser" class="inputMessage"
-               placeholder="Type here..."
-               ng-model="vm.message"
-               focus-me="true"
-               ng-keydown="vm.sendMessage($event)"/>
-    </div>
+        <!--</textarea>-->
+        <!--</div>-->
 
-    <div class="col-md-12">
-        <select ng-model="vm.selectedUser" ng-options="user.username for user in vm.onlineUsers"></select>
+
+        <div class="people-list col-sm-3">
+            <div class="search">
+                <input type="text" placeholder="search"/>
+                <i class="fa fa-search"></i>
+            </div>
+            <ul class="list">
+                <li class="">
+                    <img src="http://lorempixel.com/64/64/people/" alt="avatar"/>
+                    <div class="about">
+                        <div class="name">Vincent Porter</div>
+                        <div class="status">
+                            <i class="fa fa-circle online"></i> online
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+
+        <div class="col-sm-9">
+            <div class="chat">
+                <div class="chat-header clearfix">
+                    <img src="https://s3-us-west-2.amazonaws.com/s.cdpn.io/195612/chat_avatar_01_green.jpg"
+                         alt="avatar"/>
+
+                    <div class="chat-about">
+                        <div class="chat-with">Chat with Vincent Porter</div>
+                        <div class="chat-num-messages">already 1 902 messages</div>
+                    </div>
+                    <i class="fa fa-star"></i>
+                </div> <!-- end chat-header -->
+
+                <div class="chat-history clearfix">
+                    <messages></messages>
+
+                </div><!-- end chat-history -->
+
+                <div class="chat-message ">
+                <textarea
+                        name="message-to-send" id="message-to-send" placeholder="Type your message"
+                        rows="3"
+                        ng-model="vm.message"
+                        focus-me="true"></textarea>
+
+                    <!--<i class="fa fa-file-o"></i> &nbsp;&nbsp;&nbsp;-->
+                    <!--<i class="fa fa-file-image-o"></i>-->
+
+                    <a class="btn btn-raised btn-primary" ng-click="vm.sendMessage()">Send</a>
+                </div>
+                <!-- end chat-message -->
+
+            </div> <!-- end chat -->
+
+        </div> <!-- end container -->
     </div>
 </div>
-

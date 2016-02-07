@@ -1,6 +1,5 @@
 'use strict';
 
-import 'jquery';
 import angular from 'angular';
 import config from './app.config.js';
 
