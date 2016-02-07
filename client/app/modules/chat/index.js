@@ -9,6 +9,7 @@ import {ChatService} from './services/chat.service';
 import {ChatController} from './controllers/chat.controller';
 
 import {messagesDirective} from './directives/messages.directive';
+import {focusMeDirective} from './directives/focus-me.directive';
 
 export default angular.module('app.chat', [uiRouter])
     .config(routes)
@@ -19,5 +20,6 @@ export default angular.module('app.chat', [uiRouter])
     .controller('ChatController', ChatController)
 
     .directive('messages', messagesDirective)
+    .directive('focusMe', focusMeDirective)
 
     .name;
